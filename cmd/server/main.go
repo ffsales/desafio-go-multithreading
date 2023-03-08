@@ -2,7 +2,7 @@ package main
 
 import (
 	"github.com/ffsales/desafio-multithreading/configs"
-	"github.com/ffsales/desafio-multithreading/internal/infra/webclient/client"
+	"github.com/ffsales/desafio-multithreading/internal/infra/thread"
 )
 
 func main() {
@@ -11,9 +11,5 @@ func main() {
 		panic(err)
 	}
 
-	println(configs.UrlApiCep)
-	println(configs.UrlViaCep)
-
-	client.GetApiCep(configs, "08485-310")
-	client.GetViaCep(configs, "08485-310")
+	thread.TriggerThread(configs, "08485-310")
 }

@@ -11,7 +11,7 @@ import (
 	"github.com/ffsales/desafio-multithreading/internal/infra/dto"
 )
 
-func GetApiCep(config *configs.Conf, cep string) {
+func GetApiCep(config *configs.Conf, cep string) dto.OutputApiCep {
 
 	ctx := context.Background()
 
@@ -44,5 +44,5 @@ func GetApiCep(config *configs.Conf, cep string) {
 		// return nil, err
 	}
 
-	println(output.Address)
+	return output
 }

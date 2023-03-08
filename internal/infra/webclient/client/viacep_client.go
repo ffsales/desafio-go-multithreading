@@ -11,7 +11,7 @@ import (
 	"github.com/ffsales/desafio-multithreading/internal/infra/dto"
 )
 
-func GetViaCep(config *configs.Conf, cep string) {
+func GetViaCep(config *configs.Conf, cep string) dto.OutputViaCep{
 
 	ctx := context.Background()
 
@@ -44,5 +44,5 @@ func GetViaCep(config *configs.Conf, cep string) {
 		// return nil, err
 	}
 
-	println(output.Logradouro)
+	return output
 }

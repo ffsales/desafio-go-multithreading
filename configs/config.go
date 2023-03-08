@@ -2,13 +2,13 @@ package configs
 
 import "github.com/spf13/viper"
 
-type conf struct {
+type Conf struct {
 	UrlApiCep string `mapstructure:"URL_APICEP"`
 	UrlViaCep string `mapstructure:"URL_VIACEP"`
 }
 
-func LoadConfig(path string) (*conf, error) {
-	var cfg *conf
+func LoadConfig(path string) (*Conf, error) {
+	var cfg *Conf
 
 	viper.SetConfigName("app_config")
 	viper.SetConfigType("env")

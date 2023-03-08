@@ -11,11 +11,11 @@ import (
 	"github.com/ffsales/desafio-multithreading/internal/infra/dto"
 )
 
-func GetApiCep(config *configs.Conf, cep string) {
+func GetViaCep(config *configs.Conf, cep string) {
 
 	ctx := context.Background()
 
-	url := fmt.Sprintf(config.UrlApiCep, cep)
+	url := fmt.Sprintf(config.UrlViaCep, cep)
 	println(url)
 
 	req, err := http.NewRequestWithContext(ctx, "GET", url, nil)
@@ -37,12 +37,12 @@ func GetApiCep(config *configs.Conf, cep string) {
 		// return nil, err
 	}
 
-	var output dto.OutputApiCep
+	var output dto.OutputViaCep
 	error = json.Unmarshal(body, &output)
 	if error != nil {
 		panic(err)
 		// return nil, err
 	}
 
-	println(output.Address)
+	println(output.Logradouro)
 }

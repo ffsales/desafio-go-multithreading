@@ -1,33 +1,43 @@
 package thread
 
 import (
-	"fmt"
+	"errors"
 	"time"
+
 	"github.com/ffsales/desafio-multithreading/configs"
 	"github.com/ffsales/desafio-multithreading/internal/infra/dto"
 	"github.com/ffsales/desafio-multithreading/internal/infra/webclient/client"
 )
 
-func TriggerThread(config *configs.Conf, cep string) {
+func TriggerThread(config *configs.Conf, cep string) (*dto.OutputResponse, error) {
 
 	apiCepChain := make(chan dto.OutputApiCep)
 	viaCepChain := make(chan dto.OutputViaCep)
+	var responseCep dto.OutputResponse = dto.OutputResponse{}
 
 	go func() {
-		apiCepChain <-client.GetApiCep(config, cep)
+		responseApiCep, err := client.GetApiCep(config, cep)
+		if err != nil {
+			panic(err)
+		}
+		apiCepChain <- *responseApiCep
 	}()
 	go func() {
-		viaCepChain <-client.GetViaCep(config, cep)
+		responseViaCep, err := client.GetViaCep(config, cep)
+		if err != nil {
+			panic(err)
+		}
+		viaCepChain <- *responseViaCep
 	}()
-	
+
 	select {
-	case jsonCep := <-apiCepChain:
-		fmt.Printf("received (ApiCep): %s\n", jsonCep.Address)
-		break
-	case jsonCep := <-viaCepChain:
-		fmt.Printf("received (ViaCep): %s\n", jsonCep.Logradouro)
-		break
+	case responseCep.ApiCep = <-apiCepChain:
+		responseCep.Api = "ApiCep"
+	case responseCep.ViaCep = <-viaCepChain:
+		responseCep.Api = "ViaCep"
 	case <-time.After(time.Second):
-		fmt.Println("timeout")
-	}	
+		return nil, errors.New("timeout")
+	}
+
+	return &responseCep, nil
 }

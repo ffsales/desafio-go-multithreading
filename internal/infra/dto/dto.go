@@ -23,3 +23,9 @@ type OutputViaCep struct {
 	Ddd         string `json:"ddd"`
 	Siafi       string `json:"siafi"`
 }
+
+type OutputResponse struct {
+	Api    string       `json:"api"`
+	ApiCep OutputApiCep `json:"apicep"`
+	ViaCep OutputViaCep `json:"viacep"`
+}

@@ -11,38 +11,33 @@ import (
 	"github.com/ffsales/desafio-multithreading/internal/infra/dto"
 )
 
-func GetApiCep(config *configs.Conf, cep string) dto.OutputApiCep {
+func GetApiCep(config *configs.Conf, cep string) (*dto.OutputApiCep, error) {
 
 	ctx := context.Background()
 
 	url := fmt.Sprintf(config.UrlApiCep, cep)
-	println(url)
 
 	req, err := http.NewRequestWithContext(ctx, "GET", url, nil)
 	if err != nil {
-		panic(err)
-		// return nil, err
+		return nil, err
 	}
 
 	resp, err := http.DefaultClient.Do(req)
 	if err != nil {
-		panic(err)
-		// return nil, err
+		return nil, err
 	}
 	defer resp.Body.Close()
 
-	body, error := io.ReadAll(resp.Body)
-	if error != nil {
-		panic(err)
-		// return nil, err
+	body, err := io.ReadAll(resp.Body)
+	if err != nil {
+		return nil, err
 	}
 
 	var output dto.OutputApiCep
-	error = json.Unmarshal(body, &output)
-	if error != nil {
-		panic(err)
-		// return nil, err
+	err = json.Unmarshal(body, &output)
+	if err != nil {
+		return nil, err
 	}
 
-	return output
+	return &output, nil
 }

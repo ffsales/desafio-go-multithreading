@@ -25,7 +25,6 @@ type OutputViaCep struct {
 }
 
 type OutputResponse struct {
-	Api    string       `json:"api"`
-	ApiCep OutputApiCep `json:"apicep"`
-	ViaCep OutputViaCep `json:"viacep"`
+	Api         string      `json:"api"`
+	CepResponse interface{} `json:"cepResponse"`
 }

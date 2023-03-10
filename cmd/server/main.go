@@ -4,7 +4,6 @@ import (
 	"fmt"
 
 	"github.com/ffsales/desafio-multithreading/configs"
-	"github.com/ffsales/desafio-multithreading/internal/infra/dto"
 	"github.com/ffsales/desafio-multithreading/internal/infra/thread"
 )
 
@@ -18,10 +17,6 @@ func main() {
 		fmt.Println(err)
 	} else {
 		fmt.Println(response.Api)
-		if response.ApiCep != (dto.OutputApiCep{}) {
-			fmt.Println(response.ApiCep)
-		} else {
-			fmt.Println(response.ViaCep)
-		}
+		fmt.Println(response.CepResponse)
 	}
 }

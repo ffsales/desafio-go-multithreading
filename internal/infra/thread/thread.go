@@ -31,9 +31,9 @@ func TriggerThread(config *configs.Conf, cep string) (*dto.OutputResponse, error
 	}()
 
 	select {
-	case responseCep.ApiCep = <-apiCepChain:
+	case responseCep.CepResponse = <-apiCepChain:
 		responseCep.Api = "ApiCep"
-	case responseCep.ViaCep = <-viaCepChain:
+	case responseCep.CepResponse = <-viaCepChain:
 		responseCep.Api = "ViaCep"
 	case <-time.After(time.Second):
 		return nil, errors.New("timeout")
